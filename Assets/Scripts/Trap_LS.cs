@@ -17,16 +17,14 @@ public class Trap_LS : MonoBehaviour
     IEnumerator LifeSpan()
     {
         MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
-        Color currentColor = propertyBlock.GetColor("_BaseColor");
+        Color currentColor = mRenderer[0].material.color;
         yield return new WaitForSeconds(1f);
-        float a = 1;
-        
-        
-        
-        while (true)
+        float startTime = Time.time;
+        float endTime = startTime + 3f;
+        while (Time.time < endTime)
         {
-            a = Mathf.Lerp(a, 0, Time.deltaTime * 1f);
-            currentColor.a = a;
+            float t = 1 - Mathf.InverseLerp(startTime, endTime, Time.time);
+            currentColor.a = t;
             propertyBlock.SetColor("_BaseColor", currentColor);
             foreach (MeshRenderer renderer in mRenderer)
             {
