@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,13 +18,24 @@ public class Trap_LS : MonoBehaviour
     {
         MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
         Color currentColor = propertyBlock.GetColor("_BaseColor");
-        currentColor.a = 0;
-        propertyBlock.SetColor("_BaseColor", currentColor);
-        yield return new WaitForSeconds(3f);
-        foreach (MeshRenderer renderer in mRenderer)
+        yield return new WaitForSeconds(1f);
+        float a = 1;
+        
+        
+        
+        while (true)
         {
-            renderer.SetPropertyBlock(propertyBlock);
+            a = Mathf.Lerp(a, 0, Time.deltaTime * 1f);
+            currentColor.a = a;
+            propertyBlock.SetColor("_BaseColor", currentColor);
+            foreach (MeshRenderer renderer in mRenderer)
+            {
+                renderer.SetPropertyBlock(propertyBlock);
+            }
+            yield return null;
         }
+        
+        
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
