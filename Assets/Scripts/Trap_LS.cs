@@ -3,25 +3,28 @@ using UnityEngine;
 
 public class Trap_LS : MonoBehaviour
 {
-    MeshRenderer mRenderer;
+    MeshRenderer[] mRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GetComponent<MeshRenderer>();
+        mRenderer = GetComponentsInChildren<MeshRenderer>();
         StartCoroutine(LifeSpan());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator LifeSpan()
     {
         MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
-        propertyBlock.SetColor("_Color", Random.ColorHSV());
+        Color currentColor = propertyBlock.GetColor("_BaseColor");
+        currentColor.a = 0;
+        propertyBlock.SetColor("_BaseColor", currentColor);
         yield return new WaitForSeconds(3f);
-        mRenderer.SetPropertyBlock(propertyBlock);
+        foreach (MeshRenderer renderer in mRenderer)
+        {
+            renderer.SetPropertyBlock(propertyBlock);
+        }
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }
