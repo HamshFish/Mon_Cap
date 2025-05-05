@@ -2,7 +2,8 @@ using UnityEngine;
 
 public interface Trapped
 {
-    public void CaptureAnim();
+    public bool isBeingTrapped {get; set;}
+    public bool CaptureAnim();
 
     public int Points();
 }

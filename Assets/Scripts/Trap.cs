@@ -11,20 +11,25 @@ public class Trap : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trapped");
         if(other.TryGetComponent<Trapped>(out Trapped critters))
         {
-            StartCoroutine(Capture(critters));
+            if (critters.isBeingTrapped) return;
+            Score_Mngr.instance?.IncreaseScore(1);
+            Debug.Log("Component syphoned");
+            StartCoroutine(Capture(critters, other.gameObject));
         }
     }
-    IEnumerator Capture(Trapped critters)
+    IEnumerator Capture(Trapped critters, GameObject go)
     {
-
-        while(true)
+        bool isAnimationPlaying = true;
+        while(isAnimationPlaying)
         {
             rb.isKinematic = true;
             transform.rotation = Quaternion.AngleAxis(Time.deltaTime, Vector3.up);
-            critters.CaptureAnim();
+            isAnimationPlaying = critters.CaptureAnim();
             yield return null;
         }
+        Destroy(go);
     }
 }
