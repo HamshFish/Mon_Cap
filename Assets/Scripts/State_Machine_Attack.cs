@@ -4,7 +4,7 @@ using UnityEngine;
 using static Unity.Burst.Intrinsics.X86;
 
 
-public class State_Machine : MonoBehaviour, Trapped
+public class State_Machine_Attack : MonoBehaviour, Trapped
 {
     float timer = 1;
     public bool isBeingTrapped { get; set; } = false;
