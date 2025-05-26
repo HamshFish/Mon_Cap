@@ -14,6 +14,7 @@ public class Player_Move : MonoBehaviour
 
     float jumpSpeed = 300;
     float moveSpeed = 10;
+    float maxSpeed = 50f;
 
     private void Awake()
     {
@@ -46,6 +47,12 @@ public class Player_Move : MonoBehaviour
         movement3D = movement3D.normalized * movement3D.magnitude;
 
         rb.AddForce(movement3D * moveSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        if (isGrounded)
+        {
+            Vector3 goalMovement = movement3D * moveSpeed;
+            Vector3 newVelocity = Vector3.Lerp(rb.linearVelocity, goalMovement, Time.deltaTime * 10f);
+            rb.linearVelocity = newVelocity;
+        }
     }
 
     private void OnCollisionStay(Collision collision)

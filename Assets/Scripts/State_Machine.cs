@@ -101,7 +101,7 @@ public class State_Machine : MonoBehaviour, Trapped
         Debug.Log("Entering Attack State");
         transform.localScale = new Vector3(transform.localScale.x * 0.4f, transform.localScale.y * 0.4f, transform.localScale.z * 3);
         Vector3 direction = player.transform.position - transform.position;
-        rb.AddForce(direction.normalized * 500f);
+        rb.AddForce(direction.normalized * 400f);
         while (state == State.Attack) 
         {
             yield return new WaitForSeconds(2f);
