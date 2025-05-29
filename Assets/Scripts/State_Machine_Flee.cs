@@ -19,6 +19,7 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
     public GameObject player;
     Vector3 originScale;
     public bool isBeingTrapped { get; set; }
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,7 +45,7 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
                 break;
         }
     }
-    bool isFacingGrimm()
+    bool IsFacingGrimm()
     {
         Vector3 directionToPlayer = player.transform.position - transform.position;
         directionToPlayer.Normalize();
@@ -58,7 +59,7 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
         {
             rendition.material.color = patrol;
             transform.rotation *= Quaternion.Euler(0f, 50f * Time.deltaTime, 0f);
-            if (isFacingGrimm())
+            if (IsFacingGrimm() && player.transform.position.magnitude < 6f)
             {
                 states = States.Alerted;
             }
@@ -73,6 +74,7 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
         while (states == States.Alerted)
         {
             rendition.material.color = alert;
+            states = States.Flee;
             yield return null;
         }
         Debug.Log("Exiting Alerted State");
@@ -89,8 +91,14 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
             transform.localScale = new Vector3(wave, wave2, wave);
             Vector3 direction = player.transform.position + transform.position;
             rb.AddForce(direction.normalized * (800f * Time.deltaTime));
+            if (player.transform.position.magnitude >= 6f)
+            {
+                states = States.Patrol;
+            }
             yield return null;
         }
+        Debug.Log("In A Safe Spot.");
+        NextState();
     }
     public bool CaptureAnim()
     {

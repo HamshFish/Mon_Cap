@@ -14,7 +14,7 @@ public class Player_Move : MonoBehaviour
 
     float jumpSpeed = 300;
     float moveSpeed = 10;
-    float maxSpeed = 50f;
+    
 
     private void Awake()
     {

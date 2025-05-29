@@ -540,7 +540,7 @@ MonoBehaviour:
   uiTextScore: {fileID: 1469345373}
   scoresParent: {fileID: 135495570}
   scorePrefab: {fileID: 5325375475545019740, guid: d50a70e1d0f24834b9b6f4a86c09d78d, type: 3}
-  maxScoresCount: 10
+  maxScoresCount: 5
 --- !u!4 &326851609
 Transform:
   m_ObjectHideFlags: 0
@@ -1117,7 +1117,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832575517}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 572c85439ac625f499dae98c7dc70585, type: 3}
   m_Name: 
@@ -1240,7 +1240,7 @@ Transform:
   m_GameObject: {fileID: 1030132635}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1552062, y: 3.74, z: -9.54669}
+  m_LocalPosition: {x: 2.1552062, y: 0.68, z: -9.54669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
