@@ -57,9 +57,11 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
         Debug.Log("Entering Patrol State");
         while (states == States.Patrol)
         {
+            float visualRange = Vector3.Distance(transform.position, player.transform.position);
+
             rendition.material.color = patrol;
             transform.rotation *= Quaternion.Euler(0f, 50f * Time.deltaTime, 0f);
-            if (IsFacingGrimm() && player.transform.position.magnitude < 6f)
+            if (IsFacingGrimm() && visualRange <= 30f)
             {
                 states = States.Alerted;
             }
@@ -85,13 +87,14 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
         Debug.Log("Entering Flee State");
         while(states == States.Flee)
         {
+            float visualRange = Vector3.Distance(transform.position, player.transform.position);
             rendition.material.color = flee;
             float wave = Mathf.Sin(Time.time * 20f) * 0.1f + 1f;
             float wave2 = Mathf.Cos(Time.time * 20f) * 0.1f + 1f;
             transform.localScale = new Vector3(wave, wave2, wave);
-            Vector3 direction = player.transform.position + transform.position;
-            rb.AddForce(direction.normalized * (800f * Time.deltaTime));
-            if (player.transform.position.magnitude >= 6f)
+            Vector3 direction = player.transform.position - transform.position;
+            rb.AddForce(direction.normalized * (-800f * Time.deltaTime));
+            if (visualRange > 60f)
             {
                 states = States.Patrol;
             }

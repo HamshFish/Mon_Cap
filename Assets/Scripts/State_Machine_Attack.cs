@@ -19,8 +19,13 @@ public class State_Machine_Attack : MonoBehaviour, Trapped
     public GameObject player;
     Rigidbody rb;
     Vector3 originalScale;
+    private Color attack = Color.red;
+    private Color alert = Color.yellow;
+    private Color patrol = Color.green;
+    private Renderer rendition;
     private void Start()
     {
+        rendition = GetComponent<Renderer>();
         rb = GetComponent<Rigidbody>();
         originalScale = transform.localScale;
         NextState();
@@ -58,7 +63,7 @@ public class State_Machine_Attack : MonoBehaviour, Trapped
         {
             transform.rotation *= Quaternion.Euler(0f, 50f * Time.deltaTime, 0f);
 
-            
+            rendition.material.color = patrol;
 
             if (isFacingGrimm())
             {
@@ -76,6 +81,7 @@ public class State_Machine_Attack : MonoBehaviour, Trapped
         Debug.Log("Entering Chasing State");
         while (state == State.Chasing)
         {
+            rendition.material.color = alert;
             float wave = Mathf.Sin(Time.time * 20f) * 0.1f + 1f;
             float wave2 = Mathf.Cos(Time.time * 20f) * 0.1f + 1f;
             transform.localScale = new Vector3(wave, wave2, wave);
@@ -104,6 +110,7 @@ public class State_Machine_Attack : MonoBehaviour, Trapped
         rb.AddForce(direction.normalized * 400f);
         while (state == State.Attack) 
         {
+            rendition.material.color = attack;
             yield return new WaitForSeconds(2f);
             state = State.Patrol;
         }
