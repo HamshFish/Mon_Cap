@@ -74,7 +74,8 @@ public class State_Machine_Flee : MonoBehaviour, Trapped
         while (states == States.Alerted)
         {
             rendition.material.color = alert;
-            states = States.Flee;
+            if (player.transform.position.magnitude < 3f)
+            { states = States.Flee; }
             yield return null;
         }
         Debug.Log("Exiting Alerted State");
